@@ -127,15 +127,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 16,
                 ),
-                const Text(
-                  'Forgot Password?',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
                 SharedWidgets.buildElevatedButton(
                   width: context.width,
                   onPress: _isLoading ? null : login,

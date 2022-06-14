@@ -71,7 +71,7 @@ class ProfileController extends GetConnect {
       Get.snackbar('Success!', 'Loaded Successfully');
       print(id);
     } else {
-      // throw Exception();
+      Get.snackbar('Error ${response.statusCode}', response.body.toString());
     }
   }
 

@@ -28,11 +28,11 @@ class _CartPageState extends State<CartPage> {
     await cartController.getCartItems();
   }
 
-  int getTotalQuantity() {
+  double getTotalQuantity() {
     final cartController = Get.find<CartController>();
-    int total = 0;
+    double total = 0;
     for (var cart in cartController.carts) {
-      total += cart.quantity;
+      total += (cart.quantity * cart.product.price);
     }
     return total;
   }
@@ -104,14 +104,14 @@ class _CartPageState extends State<CartPage> {
                         color: Colors.grey,
                       ),
                     ),
-                    // Text(
-                    //   '\$ ${product.price * product.quantity}',
-                    //   style: TextStyle(
-                    //     color: primaryColor,
-                    //     fontWeight: FontWeight.bold,
-                    //     fontSize: 20,
-                    //   ),
-                    // ),
+                    Text(
+                      '\$ ${(product.product.price * product.quantity).toStringAsFixed(2)}',
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
                   ],
                 ),
               ),

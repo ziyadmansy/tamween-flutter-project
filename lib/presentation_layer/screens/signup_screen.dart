@@ -257,6 +257,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Obx(() => Expanded(
                           child: SharedWidgets.buildBorderedDropDown<int?>(
                             value: selectedCityId,
+                            isDense: true,
                             items: profileController.cities
                                 .map((element) => DropdownMenuItem<int?>(
                                       value: element.id,

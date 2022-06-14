@@ -30,30 +30,6 @@ class _VendorProductsScreenState extends State<VendorProductsScreen> {
     await vendorController.getVendorProducts(vendorId: vendor.id);
   }
 
-  // Widget buildFilteredList() {
-  //   return GridView.builder(
-  //       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-  //           crossAxisCount: 2, childAspectRatio: 0.8),
-  //       itemCount: newProducts.length,
-  //       shrinkWrap: true,
-  //       physics: const ClampingScrollPhysics(),
-  //       itemBuilder: (context, index) {
-  //         return ProductItem(
-  //           product: newProducts[index],
-  //         );
-  //       });
-  // }
-
-  // List<Product> getProductsByCategory(String category) {
-  //   List<Product> filteredProducts = [];
-  //   for (var product in allProducts) {
-  //     if (product.category == category) {
-  //       filteredProducts.add(product);
-  //     }
-  //   }
-  //   return filteredProducts;
-  // }
-
   @override
   Widget build(BuildContext context) {
     final vendorsController = Get.find<VendorsController>();

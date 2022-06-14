@@ -71,6 +71,7 @@ class AuthController extends GetConnect {
     required int cityId,
     required String credit,
   }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     print(ApiRoutes.register);
     Response response = await post(
       ApiRoutes.register,
@@ -90,7 +91,8 @@ class AuthController extends GetConnect {
     print(decodedResponseBody);
     print(response.statusCode);
     if (response.statusCode == 201) {
-      // token = decodedResponseBody['token'];
+      token.value = decodedResponseBody['token'];
+      await prefs.setString(TOKEN_KEY, token.value);
       // print(token);
     } else {
       throw UnauthenticatedException();

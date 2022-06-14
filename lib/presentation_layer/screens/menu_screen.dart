@@ -11,12 +11,6 @@ class MenuPage extends StatelessWidget {
     return ListView(
       children: [
         ListTile(
-          title: Text('FAQ'),
-          leading: Icon(Icons.format_quote),
-          onTap: () {},
-        ),
-        Divider(),
-        ListTile(
           title: Text('Logout'),
           leading: Icon(Icons.logout),
           onTap: () async {

@@ -241,26 +241,4 @@ class VendorsController extends GetConnect {
       throw Exception();
     }
   }
-
-  // Future<void> getVendorDetails(int vendorId) async {
-  //   print(ApiRoutes.vendorDetails(vendorId));
-  //   Response response = await get(
-  //     ApiRoutes.vendorDetails(vendorId),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Accept': '*/*',
-  //     },
-  //   );
-
-  //   final List decodedResponseBody = response.body;
-  //   print(decodedResponseBody);
-  //   print(response.statusCode);
-  //   if (response.statusCode == 200) {
-  //     vendors.value =
-  //         decodedResponseBody.map((it) => Vendor.fromJson(it)).toList();
-  //     // vendors.refresh();
-  //   } else {
-  //     throw Exception();
-  //   }
-  // }
 }

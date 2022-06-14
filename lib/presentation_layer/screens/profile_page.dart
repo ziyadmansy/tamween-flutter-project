@@ -17,6 +17,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final countryController = TextEditingController();
+  final cityController = TextEditingController();
 
   int? selectedCityId;
 
@@ -34,6 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
     firstNameController.text = profileController.firstName.value;
     lastNameController.text = profileController.lastName.value;
     creditController.text = profileController.credit.value.toString();
+    cityController.text = profileController.city.value;
   }
 
   Future<void> getCities() async {
@@ -117,38 +119,57 @@ class _ProfilePageState extends State<ProfilePage> {
                     width: 16,
                   ),
                   Expanded(
-                    child: SharedWidgets.buildBorderedDropDown<int?>(
-                      value: selectedCityId,
-                      items: profileController.cities
-                          .map((element) => DropdownMenuItem<int?>(
-                                value: element.id,
-                                child: Text(element.name),
-                              ))
-                          .toList(),
+                    child: SharedWidgets.buildClickableTextForm(
+                      controller: cityController,
                       hint: 'City',
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCityId = value;
-                        });
+                      isIgnoringTextInput: true,
+                      onClick: null,
+                      onValidate: (value) {
+                        if (value!.isEmpty) {
+                          return 'Select city';
+                        } else {
+                          return null;
+                        }
                       },
                     ),
                   ),
                 ],
               ),
               SizedBox(
-                height: 32,
+                height: 16,
               ),
-              SharedWidgets.buildElevatedButton(
-                onPress: updateProfile,
-                btnText: 'Update Profie',
-                btnColor: primaryColor,
+              SharedWidgets.buildBorderedDropDown<int?>(
+                value: selectedCityId,
+                items: profileController.cities
+                    .map((element) => DropdownMenuItem<int?>(
+                          value: element.id,
+                          child: Text(element.name),
+                        ))
+                    .toList(),
+                hint: 'City',
+                onChanged: (value) {
+                  setState(() {
+                    selectedCityId = value;
+                    cityController.text = profileController.cities
+                        .firstWhere((element) => element.id == value)
+                        .name;
+                  });
+                },
               ),
               SizedBox(
                 height: 32,
               ),
               SharedWidgets.buildElevatedButton(
                 onPress: updateProfile,
-                btnText: 'Delete Profie',
+                btnText: 'Update Profile',
+                btnColor: primaryColor,
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              SharedWidgets.buildElevatedButton(
+                onPress: updateProfile,
+                btnText: 'Delete Profile',
                 btnColor: redColor,
               ),
               SizedBox(
