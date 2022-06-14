@@ -19,6 +19,7 @@ class _VendorProfilePageState extends State<VendorProfilePage> {
   final addressController = TextEditingController();
   final openTimeController = TextEditingController();
   final closeTimeController = TextEditingController();
+  final cityController = TextEditingController();
 
   int? selectedCityId;
 
@@ -38,6 +39,7 @@ class _VendorProfilePageState extends State<VendorProfilePage> {
     addressController.text = vendorController.vendor.value.address ?? '';
     openTimeController.text = vendorController.vendor.value.openTime ?? '';
     closeTimeController.text = vendorController.vendor.value.closeTime ?? '';
+    cityController.text = profileController.city.value;
   }
 
   Future<void> getCities() async {
@@ -126,23 +128,42 @@ class _VendorProfilePageState extends State<VendorProfilePage> {
                     width: 16,
                   ),
                   Expanded(
-                    child: SharedWidgets.buildBorderedDropDown<int?>(
-                      value: selectedCityId,
-                      items: profileController.cities
-                          .map((element) => DropdownMenuItem<int?>(
-                                value: element.id,
-                                child: Text(element.name),
-                              ))
-                          .toList(),
+                    child: SharedWidgets.buildClickableTextForm(
+                      controller: cityController,
                       hint: 'City',
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCityId = value;
-                        });
+                      isIgnoringTextInput: true,
+                      onClick: null,
+                      onValidate: (value) {
+                        if (value!.isEmpty) {
+                          return 'Select city';
+                        } else {
+                          return null;
+                        }
                       },
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              SharedWidgets.buildBorderedDropDown<int?>(
+                value: selectedCityId,
+                items: profileController.cities
+                    .map((element) => DropdownMenuItem<int?>(
+                          value: element.id,
+                          child: Text(element.name),
+                        ))
+                    .toList(),
+                hint: 'Update City',
+                onChanged: (value) {
+                  setState(() {
+                    selectedCityId = value;
+                    cityController.text = profileController.cities
+                        .firstWhere((element) => element.id == value)
+                        .name;
+                  });
+                },
               ),
               SizedBox(
                 height: 32,
@@ -153,7 +174,7 @@ class _VendorProfilePageState extends State<VendorProfilePage> {
                 btnColor: primaryColor,
               ),
               SizedBox(
-                height: 32,
+                height: 16,
               ),
               SharedWidgets.buildElevatedButton(
                 onPress: updateProfile,

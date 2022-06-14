@@ -25,7 +25,13 @@ class _VendorsPageState extends State<VendorsPage> {
 
   Future<void> getVendors() async {
     final vendorsController = Get.find<VendorsController>();
-    await vendorsController.getVendors(1);
+    final profileController = Get.find<ProfileController>();
+    await profileController.getProfile();
+    await profileController.getCities();
+    final userCityId = profileController.cities
+        .firstWhere((element) => element.name == profileController.city.value)
+        .id;
+    await vendorsController.getVendors(userCityId);
     print(vendorsController.vendors.length);
   }
 
@@ -121,20 +127,24 @@ class _VendorsPageState extends State<VendorsPage> {
   @override
   Widget build(BuildContext context) {
     var vendorsController = Get.find<VendorsController>();
-    return Obx(() => ListView.builder(
-          itemCount: vendorsController.vendors.length,
-          itemBuilder: (context, i) {
-            final vendor = vendorsController.vendors[i];
-            return buildVendorCardItem(
-              vendor: vendor,
-              onPressed: () {
-                Get.toNamed(
-                  VendorProductsScreen.routeName,
-                  arguments: vendor,
-                );
-              },
-            );
-          },
-        ));
+    return Obx(() => vendorsController.vendors.isEmpty
+        ? Center(
+            child: Text('No vendors found'),
+          )
+        : ListView.builder(
+            itemCount: vendorsController.vendors.length,
+            itemBuilder: (context, i) {
+              final vendor = vendorsController.vendors[i];
+              return buildVendorCardItem(
+                vendor: vendor,
+                onPressed: () {
+                  Get.toNamed(
+                    VendorProductsScreen.routeName,
+                    arguments: vendor,
+                  );
+                },
+              );
+            },
+          ));
   }
 }

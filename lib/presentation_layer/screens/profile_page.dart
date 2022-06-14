@@ -30,8 +30,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> getProfile() async {
     final profileController = Get.find<ProfileController>();
-    countryController.text = profileController.country.value;
     await profileController.getProfile();
+    countryController.text = profileController.country.value;
     firstNameController.text = profileController.firstName.value;
     lastNameController.text = profileController.lastName.value;
     creditController.text = profileController.credit.value.toString();
@@ -146,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text(element.name),
                         ))
                     .toList(),
-                hint: 'City',
+                hint: 'Update City',
                 onChanged: (value) {
                   setState(() {
                     selectedCityId = value;
